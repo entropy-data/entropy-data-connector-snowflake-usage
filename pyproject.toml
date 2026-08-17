@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Snowflake usage tracking connector for Entropy Data"
 requires-python = ">=3.13"
 dependencies = [
-    "snowflake-connector-python>=4.7.1",
+    "snowflake-connector-python>=4.7.2",
     "requests>=2.33.0",
     "python-dotenv>=1.2.2",
 ]
