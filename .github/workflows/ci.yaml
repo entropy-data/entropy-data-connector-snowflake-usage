@@ -1,0 +1,26 @@
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+name: CI
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install uv
+        # setup-uv publishes no floating major tag, so pin the exact version.
+        uses: astral-sh/setup-uv@v10.3.0
+        with:
+          # pyproject allows any 3.13+, but snowflake-connector-python's vendored
+          # urllib3 fails to import on 3.15 (ssl.PROTOCOL_TLSv1 was removed).
+          python-version: '3.13'
+      - name: Install the project
+        run: uv sync --frozen --extra dev
+      - name: Run tests
+        run: uv run --frozen pytest
